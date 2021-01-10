@@ -3,4 +3,6 @@
     <color name="colorPrimary">#EE0038</color>
     <color name="colorPrimaryDark">#B3002A</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="cardTitleTextView">#D2000000</color>
 </resources>

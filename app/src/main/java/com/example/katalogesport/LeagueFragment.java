@@ -3,10 +3,14 @@ package com.example.katalogesport;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +18,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class LeagueFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private LeagueAdapter adapter;
+    private ArrayList<League> leagueArrayList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,10 +57,22 @@ public class LeagueFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_league);
+        String jsonData = "[{'nameLeague':'The International 9'}, {'nameLeague':'Epicenter League'}, {'nameLeague':'BTS Pro Series'}, {'nameLeague':'ESL One Katowice'}]";
+        setData(jsonData);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_league);
+        adapter = new LeagueAdapter(leagueArrayList);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(LeagueFragment.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override

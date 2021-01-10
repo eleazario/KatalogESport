@@ -19,13 +19,14 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView=findViewById(R.id.bottomNav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new LeagueFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-            Fragment fragment=null;
+            Fragment fragment = null;
             switch (menuItem.getItemId()){
                 case R.id.league:
                     fragment = new LeagueFragment();
