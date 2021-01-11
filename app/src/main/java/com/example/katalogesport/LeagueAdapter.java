@@ -42,5 +42,8 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueAdapter.LeagueView
             super(itemView);
             tvLeagueName = (TextView) itemView.findViewById(R.id.tv_leagueName);
         }
+        public TextView getTvLeagueName(){
+            return tvLeagueName;
+        }
     }
 }

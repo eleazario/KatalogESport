@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -57,16 +61,6 @@ public class LeagueFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_league);
-        String jsonData = "[{'nameLeague':'The International 9'}, {'nameLeague':'Epicenter League'}, {'nameLeague':'BTS Pro Series'}, {'nameLeague':'ESL One Katowice'}]";
-        setData(jsonData);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_league);
-        adapter = new LeagueAdapter(leagueArrayList);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(LeagueFragment.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -75,9 +69,29 @@ public class LeagueFragment extends Fragment {
 
     }
 
+    void setData(String jsonString){
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+            leagueArrayList = new ArrayList<>();
+            for(int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                League league = new League(jsonObject.getString("nameLeague"));
+
+                leagueArrayList.add(league);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        String jsonData = "[{'nameLeague':'The International 9'},"+"{'nameLeague':'Epicenter League'},"+"{'nameLeague':'BTS Pro Series'},"+"{'nameLeague':'ESL One Katowice'}]";
+        setData(jsonData);
+
+        adapter = new LeagueAdapter(leagueArrayList);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_league, container, false);
     }
